@@ -26,7 +26,7 @@ class ChatPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'images/Chat.png',
+                'images/talk.png',
                 height: 40,
               ),
               const Text(

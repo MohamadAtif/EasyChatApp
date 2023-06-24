@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:easychat/cubit/Login_cubit/login_cubit.dart';
 import 'package:easychat/cubit/chat_cubit/chat_cubit.dart';
 import 'package:easychat/screens/register_page.dart';
@@ -22,20 +24,22 @@ class LoginPage extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           formkey.currentState!.validate();
-              if (state is LoginLoading){
-                   LoginLoading();
-              }
-
-         else if(state is LoginSucces){
+          if (state is LoginLoading){
+            showDialog(context: context, builder: (context) {
+            return  const  Center(child: CircularProgressIndicator());
+            },);
+          }
+            
+      else if(state is LoginSucces){
           BlocProvider.of<ChatCubit>(context).getMessages();
               Navigator.push(context, MaterialPageRoute(builder: (context){
                 return ChatPage(email:email!);
               }));
              }
              else if(state is LoginFailure ){
-              LoginFailure(ErrorMessage: 'login failure');
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('something went wrong')));
              } else{
-           const   Center(child:Text('something is weny wrong'));
+              (child:ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('something went wrong'))));
              }
         },
         builder: (context, state) =>BodyPage(context),
@@ -55,7 +59,7 @@ class LoginPage extends StatelessWidget {
               flex: 2,
             ),
             Image.asset(
-              'images/Chat.png',
+              'images/talk.png',
               height: 110,
             ),
             const SizedBox(
@@ -63,14 +67,14 @@ class LoginPage extends StatelessWidget {
             ),
             const Text(
               'EasyChat',
-              style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,fontFamily: 'Kanit'),
             ),
             const SizedBox(
               height: 50,
             ),
             const Text(
               'SIGN IN',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,fontFamily: 'Kanit'),
             ),
             CustomTextField(
               labelText: 'Enter Email',
@@ -91,15 +95,7 @@ class LoginPage extends StatelessWidget {
               OnClick: () async {
                 if (formkey.currentState!.validate()) {
                  
-                    BlocProvider.of<LoginCubit>(context).LoginUser(email: email!, password: password!);
-
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return ChatPage(
-                          email: email!,
-                        );
-                      },
-                    ));
+                    BlocProvider.of<LoginCubit>(context).loginUser(email: email!, password: password!);
                  
                 }else{}
               },

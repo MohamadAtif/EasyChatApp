@@ -46,7 +46,7 @@ class RegisterPage extends StatelessWidget {
                   flex: 2,
                 ),
                 Image.asset(
-                  'images/Chat.png',
+                  'images/talk.png',
                   height: 110,
                 ),
                 const SizedBox(
@@ -54,14 +54,14 @@ class RegisterPage extends StatelessWidget {
                 ),
                 const Text(
                   'EasyChat',
-                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,fontFamily: 'Kanit'),
                 ),
                 const SizedBox(
                   height: 50,
                 ),
                 const Text(
                   'REGISTER',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold ,fontFamily: 'Kanit'),
                 ),
                 CustomTextField(
                   labelText: 'Enter Email',
@@ -84,13 +84,7 @@ class RegisterPage extends StatelessWidget {
                       try {
                         BlocProvider.of<RegisterCubit>(context)
                             .RegisterUser(email: email!, password: password!);
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return ChatPage(
-                              email: email!,
-                            );
-                          },
-                        ));
+                        
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'weak-password') {
                           ScaffoldMessenger.of(context).showSnackBar(

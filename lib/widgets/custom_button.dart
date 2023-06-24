@@ -6,15 +6,18 @@ String TextButton;
 VoidCallback? OnClick;
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      width: 400,height: 60,
-                decoration: BoxDecoration(color: Colors.deepPurple,borderRadius: BorderRadius.circular(18),),
-                child: ElevatedButton(
-                onPressed: OnClick,
-                  child: Text( TextButton,
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                           
-                    )),
-              );
+    return  GestureDetector(
+      onTap:  OnClick,
+      child: Container(
+        width: 400,height: 60,
+                  decoration: BoxDecoration(color: Colors.deepPurple,borderRadius: BorderRadius.circular(18),),
+                    child: Center(
+                      child: Text( TextButton,
+                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'Kanit'),
+                               
+                        ),
+                    )
+                ),
+    );
   }
 }

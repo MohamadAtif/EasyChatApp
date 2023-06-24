@@ -8,19 +8,26 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
 
-Future <void>LoginUser({required String email,required String password})async{
+Future <void>loginUser({required String email,required String password})async{
    
-   emit(LoginLoading());
+ 
       
     try {
-  UserCredential user= await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-  FirebaseAuth auth = FirebaseAuth.instance;
+      emit(LoginLoading());
+
+       FirebaseAuth auth = FirebaseAuth.instance;
+  UserCredential user= await auth.signInWithEmailAndPassword(email: email, password: password);
+ 
+  
   emit(LoginSucces());
 } on FirebaseAuthException catch (e) {
                       if (e.code == 'user not found') {
                         emit(LoginFailure(ErrorMessage: 'user not found'));
                       } else if (e.code == 'email-already-in-use') {
                         emit(LoginFailure(ErrorMessage: 'email-already-in-use'));
+                      }
+                      else{
+                           emit(LoginFailure(ErrorMessage: 'something went wrong')); 
                       }
                     } catch (e) {
                     emit(LoginFailure(ErrorMessage: '$e'));   
